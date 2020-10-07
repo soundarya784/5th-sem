@@ -1,8 +1,10 @@
 import random
+
+
 class Node:
-    def __init__(self,key,level):
+    def __init__(self, key, level):
         self.key = key
-        self.forward = [None]*(level+1)
+        self.forward = [None] * (level + 1)
 
 
 class skipList:
@@ -16,7 +18,7 @@ class skipList:
         return new_node
 
     def insert_node(self, key):
-        update = [None] * (self.max_lvl+1)
+        update = [None] * (self.max_lvl + 1)
         cur = self.head
 
         for i in range(self.level, -1, -1):
@@ -24,7 +26,7 @@ class skipList:
                 cur = cur.forward[i]
             update[i] = cur
 
-        ran_level = random.randint(0, self.max_lvl-1)
+        ran_level = random.randint(0, self.max_lvl - 1)
         if ran_level > self.level:
             self.level = ran_level
 
@@ -50,51 +52,42 @@ class skipList:
             while cur != None:
                 print(cur.key)
                 cur = cur.forward[i]
-                
-     def deleteElement(self, search_key): 
-  
-      
-        update = [None]*(self.MAXLVL+1) 
-        current = self.header 
-  
-    
-        for i in range(self.level, -1, -1): 
-            while(current.forward[i] and current.forward[i].key < search_key): 
-                current = current.forward[i] 
-            update[i] = current 
-  
-        
-        current = current.forward[0] 
-  
-      
-        if current != None and current.key == search_key: 
-  
-            for i in range(self.level+1): 
-  
-              
-                if update[i].forward[i] != current: 
+
+    def deleteElement(self, search_key):
+
+        update = [None] * (self.max_lvl + 1)
+        current = self.head
+
+        for i in range(self.level, -1, -1):
+            while (current.forward[i] and current.forward[i].key < search_key):
+                current = current.forward[i]
+            update[i] = current
+
+        current = current.forward[0]
+
+        if current != None and current.key == search_key:
+
+            for i in range(self.level + 1):
+
+                if update[i].forward[i] != current:
                     break
-                update[i].forward[i] = current.forward[i] 
-  
-          
-            while(self.level>0 and\ 
-                  self.header.forward[self.level] == None): 
+                update[i].forward[i] = current.forward[i]
+
+            while (self.level > 0 and \
+                   self.head.forward[self.level] == None):
                 self.level -= 1
-            print("Successfully deleted {}".format(search_key)) 
-  
-    def searchElement(self, key):  
-        current = self.header 
-        for i in range(self.level, -1, -1): 
-            while(current.forward[i] and\ 
-                  current.forward[i].key < key): 
-                current = current.forward[i] 
-  
-        current = current.forward[0] 
-        if current and current.key == key: 
-            print("Found key ", key) 
+            print("Successfully deleted {}".format(search_key))
 
+    def searchElement(self, key):
+        current = self.head
+        for i in range(self.level, -1, -1):
+            while (current.forward[i] and
+                   current.forward[i].key < key):
+                current = current.forward[i]
 
-
+        current = current.forward[0]
+        if current and current.key == key:
+            print("Found key ", key)
 
 
 li = skipList(2)
@@ -103,7 +96,6 @@ li.insert_node(4)
 li.insert_node(10)
 li.insert_node(2)
 li.displayList()
-li.deleteElement(3) 
+li.deleteElement(3)
 li.displayList()
-
-
+li.searchElement(2)
