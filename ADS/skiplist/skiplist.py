@@ -50,6 +50,48 @@ class skipList:
             while cur != None:
                 print(cur.key)
                 cur = cur.forward[i]
+                
+     def deleteElement(self, search_key): 
+  
+      
+        update = [None]*(self.MAXLVL+1) 
+        current = self.header 
+  
+    
+        for i in range(self.level, -1, -1): 
+            while(current.forward[i] and current.forward[i].key < search_key): 
+                current = current.forward[i] 
+            update[i] = current 
+  
+        
+        current = current.forward[0] 
+  
+      
+        if current != None and current.key == search_key: 
+  
+            for i in range(self.level+1): 
+  
+              
+                if update[i].forward[i] != current: 
+                    break
+                update[i].forward[i] = current.forward[i] 
+  
+          
+            while(self.level>0 and\ 
+                  self.header.forward[self.level] == None): 
+                self.level -= 1
+            print("Successfully deleted {}".format(search_key)) 
+  
+    def searchElement(self, key):  
+        current = self.header 
+        for i in range(self.level, -1, -1): 
+            while(current.forward[i] and\ 
+                  current.forward[i].key < key): 
+                current = current.forward[i] 
+  
+        current = current.forward[0] 
+        if current and current.key == key: 
+            print("Found key ", key) 
 
 
 
@@ -60,6 +102,8 @@ li.insert_node(3)
 li.insert_node(4)
 li.insert_node(10)
 li.insert_node(2)
+li.displayList()
+li.deleteElement(3) 
 li.displayList()
 
 
